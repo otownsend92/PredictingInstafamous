@@ -23,6 +23,11 @@ CONFIG = {
 
 unauthenticated_api = client.InstagramAPI(**CONFIG)
 
+# api = client.InstagramAPI(client_id='12685873d4bc48578693c0a497a98d0f', client_secret='879c151fd422416aa33d251f70e3924b')
+# response = api.create_subscription(object='user', aspect='media', callback_url='http://otownsend92.github.io/studenttrade/')
+# print 'Response: ',response
+
+
 @hook('before_request')
 def setup_request():
     request.session = request.environ['beaker.session']
