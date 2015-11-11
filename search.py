@@ -132,17 +132,22 @@ def media_search():
 
                 for media in media_search:
                     #map from mediaid, location -> media properties
-                    all_media[(media.id, key)] = media
+                    if (media.id, key) not in all_media:
+                        all_media[(media.id, key)] = media
                 print("Remaining calls: " + str(api.x_ratelimit_remaining) +" of " + str(api.x_ratelimit))
             print("Media count: " + str(len(all_media)))
-            pickle.dump(all_media, f)
+
             if os.path.exists(currFileName):
+                f.close()
+                f = open(currFileName, 'w')
+                pickle.dump(all_media, f)
                 size = os.path.getsize(currFileName)
                 print("Current size(mb): " + str(size/1000000))
                 if size > 1000000000:
                     f.close()
                     newFile = True
                     fileCounter += 1
+                    all_media = {}
 
 
     except Exception as e:
