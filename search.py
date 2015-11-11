@@ -98,8 +98,21 @@ def media_search():
             all_media = pickle.load(f)
             print("Previous media dictionary size: " + str(len(all_media)))
 
-        f = open('all_media.txt', 'w')
+        currFileName = 'all_media.txt'
+        f = open(currFileName, 'w')
+
+        newFile = False
+        fileCounter = 0
         while True:
+
+            if newFile is True:
+                #sleep for 3 minutes so we don't get duplicates switching files
+                print("Sleeping for three minutes...")
+                time.sleep(180)
+                currFileName = 'all_media_'+str(fileCounter)+'.txt'
+                f = open(currFileName, 'w')
+                newFile = False
+
 
             for key in locations:
                 maxTime = int(time.time() - 86400)
@@ -108,7 +121,9 @@ def media_search():
 
                 #this guarantees we don't overstep the api limits
                 while api.x_ratelimit_remaining == 0:
+                    print("Sleeping to prevent duplicates...")
                     time.sleep(60)
+                    print("Sleep finished.")
 
                 media_search = api.media_search(lat=locations[key][0], lng=locations[key][1], count=200, distance=5000,
                                         min_timestamp=minTime, max_timestamp=maxTime)
@@ -121,6 +136,15 @@ def media_search():
                 print("Remaining calls: " + str(api.x_ratelimit_remaining) +" of " + str(api.x_ratelimit))
             print("Media count: " + str(len(all_media)))
             pickle.dump(all_media, f)
+            if os.path.exists(currFileName):
+                size = os.path.getsize(currFileName)
+                print("Current size(mb): " + str(size/1000000))
+                if size > 1000000000:
+                    f.close()
+                    newFile = True
+                    fileCounter += 1
+
+
     except Exception as e:
         print(e)
     return "%s %s <br/>Remaining API Calls = %s/%s" % (get_nav(),content,api.x_ratelimit_remaining,api.x_ratelimit)
