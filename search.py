@@ -7,6 +7,8 @@ import datetime
 import time
 import pickle
 import os
+import decimal
+import random
 
 api = None
 
@@ -125,7 +127,10 @@ def media_search():
                     time.sleep(60)
                     print("Sleep finished.")
 
-                media_search = api.media_search(lat=locations[key][0], lng=locations[key][1], count=200, distance=5000,
+                #this will add aecimal in the range of [-0.2, 0.2], see: https://en.wikipedia.org/wiki/Decimal_degrees
+                lat_pos = locations[key][0] + float(decimal.Decimal(random.randrange(-500, 500))/10000)
+                lon_pos = locations[key][1] + float(decimal.Decimal(random.randrange(-500, 500))/10000)
+                media_search = api.media_search(lat=lat_pos, lng=lon_pos, count=200, distance=5000,
                                         min_timestamp=minTime, max_timestamp=maxTime)
 
                 print(key + " photo count: " + str(len(media_search)))
