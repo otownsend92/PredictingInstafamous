@@ -5,10 +5,14 @@ from bottle import route, redirect, post, run, request, hook
 from pprint import pprint
 import datetime
 import time
-import pickle
+try:
+    import cPickle as pickle
+except:
+    import pickle
 import os
 import decimal
 import random
+import cPickle
 
 api = None
 
@@ -148,7 +152,7 @@ def media_search():
                 pickle.dump(all_media, f)
                 size = os.path.getsize(currFileName)
                 print("Current size(mb): " + str(size/1000000))
-                if size > 1000000000:
+                if size > 100000000:
                     f.close()
                     newFile = True
                     fileCounter += 1
