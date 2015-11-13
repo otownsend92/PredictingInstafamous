@@ -125,17 +125,18 @@ def media_search():
                 minTime = maxTime - 120
                 api = client.InstagramAPI(access_token=access_token, client_secret=CONFIG['client_secret'])
 
-                #this guarantees we don't overstep the api limits
-                while api.x_ratelimit_remaining == 0:
-                    print("Sleeping to prevent duplicates...")
-                    time.sleep(60)
-                    print("Sleep finished.")
 
                 #this will add aecimal in the range of [-0.2, 0.2], see: https://en.wikipedia.org/wiki/Decimal_degrees
                 lat_pos = locations[key][0] + float(decimal.Decimal(random.randrange(-500, 500))/10000)
                 lon_pos = locations[key][1] + float(decimal.Decimal(random.randrange(-500, 500))/10000)
                 media_search = api.media_search(lat=lat_pos, lng=lon_pos, count=200, distance=5000,
                                         min_timestamp=minTime, max_timestamp=maxTime)
+
+                #this guarantees we don't overstep the api limits
+                if int(api.x_ratelimit_remaining) == 0:
+                    print("Sleeping for 60 seconds, rate limit hit...")
+                    time.sleep(60)
+                    print("Sleep finished.")
 
                 print(key + " photo count: " + str(len(media_search)))
 
