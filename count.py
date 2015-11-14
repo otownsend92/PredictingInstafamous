@@ -23,5 +23,9 @@ for key in all_media:
         locations[key[1]] += 1
 
 print(locations)
-      
+
+count = 0
+for key in locations:
+	count = count + locations[key]
+print("Total: " + str(count))		      
                 
