@@ -8,11 +8,14 @@ import urllib
 
 all_media = {}
 
-for file in os.listdir('./Media'):
-    f = open('./Media/' + file, 'r')
-    all_media = pickle.load(f)
 
-    for media in all_media.keys():
-        url = str(all_media[media].images['standard_resolution'])[7:]
-        imgPath =  "./Images/" + media[0] + "." + url[-3:]
-        urllib.urlretrieve(url,imgPath)
+f = open('', 'r')
+all_media = pickle.load(f)
+
+for media in all_media.keys():
+    url = str(all_media[media].images['standard_resolution'])[7:]
+    imgPath = "./Images/" + media[0] + "." + url[-3:]
+    try:
+        urllib.urlretrieve(url, imgPath)
+    except Exception as e:
+        print("Could not retrieve: " + str(media) + " at: " + str(url))
