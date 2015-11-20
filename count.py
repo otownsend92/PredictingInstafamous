@@ -11,21 +11,28 @@ all_media = {}
 for fn in os.listdir('./Media/'):
     print("Reading file: " + str(fn))
     if os.path.exists('./Media/'+fn):
-            f = open('./Media/'+fn, 'r')
-            print(f)
-            curr_media = pickle.load(f)
-            for key in curr_media:
-                all_media[key] = curr_media[key]
+        f = open('./Media/'+fn, 'r')
+        print(f)
+        curr_media = pickle.load(f)
+        for key in curr_media:
+            all_media[key] = curr_media[key]
+f.close()
 
 print("Getting counts...")
 for key in all_media:
     if key[1] in locations:
         locations[key[1]] += 1
+    else:
+        locations[key[1]] = 1
 
 print(locations)
 
 count = 0
 for key in locations:
 	count = count + locations[key]
-print("Total: " + str(count))		      
+print("Total: " + str(count))
+
+f = open("all_media_single_file.txt", 'w')
+pickle.dump(all_media, f)
+f.close()
                 
