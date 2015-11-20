@@ -7,10 +7,10 @@ from instagram.client import InstagramAPI
 import os
 import urllib
 
-# locations = {'San Francisco':0,'New York City':0,'Los Angeles':0,'Tokyo':0,'London':0,'Paris':0,'Chicago':0,'Moscow':0,'Toronto':0,'Sydney':0}
 
-access_token = "1503846364.461e393.349bc641eed2421aad507296ea092956"
-client_secret = "384018d7be63463a87ca48a9da21f17c"
+# Insert access_token and client secret here:
+access_token = ""
+client_secret = ""
 
 def user(user_id):
 	num_followed_by = 0
@@ -28,18 +28,19 @@ def user(user_id):
 
 
 user_data = {}
-for fn in os.listdir('./Media/'):
-	print("Reading file: " + str(fn))
-	if os.path.exists('./Media/'+fn):
-		f = open('./Media/'+fn, 'r')
-		print(f)
-		curr_media = pickle.load(f)
-		for key in curr_media:
-			# all_media[key] = curr_media[key]
-			user_id = curr_media[key].user.id
-			num_followed_by,num_follows,num_media = user(user_id)
-			user_data[user_id] = (num_followed_by,num_follows,num_media)
-		f.close()
+
+# TODO: INSERT FILE NAME HERE!!!
+file_name = ''
+
+f = open(file_name, 'r')
+print("Reading file: " + file_name)
+print(f)
+curr_media = pickle.load(f)
+for key in curr_media:
+	user_id = curr_media[key].user.id
+	num_followed_by,num_follows,num_media = user(user_id)
+	user_data[user_id] = (num_followed_by,num_follows,num_media)
+f.close()
 
 
 print len(user_data), ' unique users. Writing data to disk...'
