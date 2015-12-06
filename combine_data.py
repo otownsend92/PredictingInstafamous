@@ -172,7 +172,7 @@ for media_data_file in media_file_list:
 
 				# Finally add all features to all_media
 				features = np.array([hour, num_tags, len_caption, num_people, filter_i, num_fold, num_fols, num_media]) 
-				all_data[(media,user_id,num_likes)] = features
+				all_data[(media.id,user_id,num_likes)] = features
 				# print '\n\nADDED ',media,' :: ',user_id
 
 			except Exception as e:
@@ -182,7 +182,7 @@ for media_data_file in media_file_list:
 				print 'Total dead users:',dead_users,'\n'
 				continue
 
-	if (len(all_data) > 50000):
+	if (len(all_data) > 400000):
 		ff = open('combined_data_'+str(combined_file_num)+'.txt', 'w')
 		pickle.dump(all_data, ff)
 		ff.close()
