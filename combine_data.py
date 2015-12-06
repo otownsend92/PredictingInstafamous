@@ -182,7 +182,7 @@ for media_data_file in media_file_list:
 				print 'Total dead users:',dead_users,'\n'
 				continue
 
-	if (len(all_data) > 400000):
+	if (len(all_data) > 50000):
 		ff = open('combined_data_'+str(combined_file_num)+'.txt', 'w')
 		pickle.dump(all_data, ff)
 		ff.close()
