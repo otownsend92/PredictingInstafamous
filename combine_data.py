@@ -172,7 +172,7 @@ for media_data_file in media_file_list:
 
 				# Finally add all features to all_media
 				features = np.array([hour, num_tags, len_caption, num_people, filter_i, num_fold, num_fols, num_media]) 
-				all_data[(media,user_id,num_likes)] = features
+				all_data[(m_id,user_id,num_likes)] = features
 				# print '\n\nADDED ',media,' :: ',user_id
 
 			except Exception as e:
@@ -196,6 +196,14 @@ for media_data_file in media_file_list:
 
 	# user_data.update(user_data_temp)
 	f.close()
+
+if (len(all_data) > 0):
+	ff = open('combined_data_'+str(combined_file_num)+'.txt', 'w')
+	pickle.dump(all_data, ff)
+	ff.close()
+	combined_file_num += 1
+	all_data.clear()
+	print 'Wrote combined file number',combined_file_num
 
 
 
