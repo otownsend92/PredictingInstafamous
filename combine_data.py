@@ -182,13 +182,13 @@ for media_data_file in media_file_list:
 				print 'Total dead users:',dead_users,'\n'
 				continue
 
-	if (len(all_data) > 400000):
-		ff = open('combined_data_'+str(combined_file_num)+'.txt', 'w')
-		pickle.dump(all_data, ff)
-		ff.close()
-		combined_file_num += 1
-		all_data.clear()
-		print 'Wrote combined file number',combined_file_num
+	#if (len(all_data) > 50000):
+	#	ff = open('combined_data_'+str(combined_file_num)+'.txt', 'w')
+	#	pickle.dump(all_data, ff)
+	#	ff.close()
+	#	combined_file_num += 1
+	#	all_data.clear()
+	#	print 'Wrote combined file number',combined_file_num
 
 
 
@@ -198,6 +198,7 @@ for media_data_file in media_file_list:
 	f.close()
 
 if (len(all_data) > 0):
+	print 'Length of all_data:',len(all_data)
 	ff = open('combined_data_'+str(combined_file_num)+'.txt', 'w')
 	pickle.dump(all_data, ff)
 	ff.close()
