@@ -32,7 +32,7 @@ print(len(media))
 
 for key in media:
 	media_id = key[0]
-	likes = len(media[key].likes)
+	likes = len(media[key].like_count)
 	media_like[media_id] = likes
 	
 	
